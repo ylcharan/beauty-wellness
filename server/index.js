@@ -15,6 +15,7 @@ const corsOptions = {
 };
 
 app.use(express.json());
+
 app.use("/uploads", express.static("uploads"));
 
 app.get("/connected", (req, res) => {

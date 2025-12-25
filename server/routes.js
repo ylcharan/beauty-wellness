@@ -1,9 +1,17 @@
 const express = require("express");
 const router = express.Router();
+// ✅ Handle CORS preflight requests
+router.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
 const jwt = require("jsonwebtoken");
 const { User, Admin, Shop, Service, Booking, Review } = require("./models");
 const { verifyToken, generateToken } = require("./auth");
 
+// user registration route
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
