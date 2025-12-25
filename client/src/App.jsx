@@ -1,24 +1,48 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import ShopDetails from './pages/ShopDetails';
-import UserDashboard from './pages/UserDashboard';
-import AdminDashboard from './pages/AdminDashboard';
-import ManageServices from './pages/ManageServices';
-import AdminAuth from './pages/AdminAuth';
-import Footer from './components/Footer';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import ShopDetails from "./pages/ShopDetails";
+import UserDashboard from "./pages/UserDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import ManageServices from "./pages/ManageServices";
+import AdminAuth from "./pages/AdminAuth";
+import Footer from "./components/Footer";
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
+  useState(() => {
+    fetch("https://beauty-wellness.onrender.com/connected")
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) {
+          console.log("Backend connected successfully ✅", data);
+        } else {
+          console.error("Backend connection failed ❌", data);
+        }
+      })
+      .catch((err) => {
+        console.error("Backend connection error ❌", err);
+      });
+  }, []);
   return (
     <Router>
-      <div className="app-container flex flex-col min-h-screen">
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <div className="flex flex-col min-h-screen app-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Navbar />
-        <main className="main-content flex-grow">
+        <main className="flex-grow main-content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

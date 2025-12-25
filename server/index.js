@@ -21,6 +21,13 @@ app.use(
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
+app.get("/connected", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    message: "Backend connected successfully ✅",
+  });
+});
+
 app.use("/api", routes);
 
 app.listen(PORT, async () => {
