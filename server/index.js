@@ -7,16 +7,12 @@ const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(
-  cors({
-    origin: [
-      "https://beauty-wellness-rho.vercel.app/",
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: ["https://beauty-wellness-rho.vercel.app", "http://localhost:5173"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
@@ -36,8 +32,8 @@ app.listen(PORT, async () => {
       process.env.MONGO_URI || "mongodb://localhost:27017/beauty_wellness";
     await mongoose.connect(mongoUri);
     console.log("DB connected");
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
   } catch (err) {
-    console.log("Database connectivity error");
+    console.error("Database connectivity error", err);
   }
 });
