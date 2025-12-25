@@ -1,5 +1,9 @@
 /* eslint-disable no-useless-catch */
-const API_URL = "http://127.0.0.1:8080/api";
+// Use Vite env var `VITE_API_URL` when provided.
+// Ensure the resulting base always ends with `/api` (no duplicate slashes).
+const _rawApi = import.meta.env.VITE_API_URL || "http://127.0.0.1:8080";
+const normalized = _rawApi.replace(/\/+$/g, "");
+const API_URL = normalized.endsWith("/api") ? normalized : `${normalized}/api`;
 
 export const getAuthHeader = () => {
   const token = localStorage.getItem("token");

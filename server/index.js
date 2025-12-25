@@ -7,7 +7,17 @@ const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://beauty-wellness-rho.vercel.app/",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
